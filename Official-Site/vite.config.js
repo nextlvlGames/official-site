@@ -5,9 +5,9 @@ export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     esbuildOptions: {
-      // Node.js global to browser global polyfills
+      // Remove polyfills completely
       define: {
-        global: 'globalThis',
+        global: 'undefined',
       },
     },
   },
@@ -16,4 +16,3 @@ export default defineConfig({
     },
   },
 })
-     

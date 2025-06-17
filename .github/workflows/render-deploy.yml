@@ -18,12 +18,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18' # Updated to Node.js 18 for better compatibility
 
       # Install dependencies
       - name: Install dependencies
         run: npm install
         working-directory: ./Official-Site
+
+      # Remove unnecessary polyfill packages
+      - name: Remove unnecessary polyfill packages
+        run: |
+          cd Official-Site
+          npm uninstall @esbuild-plugins/node-globals-polyfill @esbuild-plugins/node-modules-polyfill stream-browserify buffer rollup-plugin-node-polyfills
 
       # Create crypto polyfill
       - name: Create crypto polyfill
@@ -72,12 +78,6 @@ jobs:
               --static-site-command "cd Official-Site && npm run start" \
               --publish-path "Official-Site/dist"
             SERVICE_ID=$(render services list --json | jq -r --arg NAME "$SERVICE_NAME" '.[] | select(.service.name == $NAME) | .service.id')
-          else
-            echo "Service exists: $SERVICE_ID"
-          fi
-
-          echo "Deploying service ID: $SERVICE_ID"
-          render deploy service "$SERVICE_ID" --branch master
           else
             echo "Service exists: $SERVICE_ID"
           fi
