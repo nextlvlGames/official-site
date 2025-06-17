@@ -76,7 +76,7 @@ jobs:
           else
             echo "Service $SERVICE_NAME does not exist. Creating..."
             
-            # Create service
+            # Create service with ownerID
             CREATE_RESPONSE=$(curl -s -X POST \
               -H "Authorization: Bearer $RENDER_API_KEY" \
               -H "Content-Type: application/json" \
@@ -86,7 +86,8 @@ jobs:
                 \"repo\": \"$REPO_URL\",
                 \"branch\": \"$BRANCH\",
                 \"buildCommand\": \"$BUILD_COMMAND\",
-                \"publishPath\": \"$PUBLISH_PATH\"
+                \"publishPath\": \"$PUBLISH_PATH\",
+                \"ownerID\": \"$RENDER_OWNER_ID\"
               }" \
               "https://api.render.com/v1/services")
             
@@ -94,4 +95,5 @@ jobs:
           fi
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_OWNER_ID: ${{ secrets.RENDER_OWNER_ID }}
           GITHUB_REPOSITORY: ${{ github.repository }}
