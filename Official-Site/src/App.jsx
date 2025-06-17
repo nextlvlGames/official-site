@@ -193,8 +193,45 @@ function HomePage() {
 
       {/* Footer */}
       <footer className="bg-soulblue-900 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <p className="text-gray-400">&copy; 2024 NextLvlGames. All rights reserved.</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-400">&copy; 2024 NextLvlGames. All rights reserved.</p>
+            
+            <div className="mt-4 md:mt-0 flex flex-wrap justify-center space-x-4">
+              <a 
+                href="https://esports.nextlvlgames.site/contact.html" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-soulblue-400"
+              >
+                Contact
+              </a>
+              <a 
+                href="https://esports.nextlvlgames.site/terms-and-conditions.html" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-soulblue-400"
+              >
+                Terms &amp; Conditions
+              </a>
+              <a 
+                href="https://esports.nextlvlgames.site/privacy-policy.html" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-soulblue-400"
+              >
+                Privacy Policy
+              </a>
+              <a 
+                href="https://esports.nextlvlgames.site/blog.html" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-soulblue-400"
+              >
+                Blog
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

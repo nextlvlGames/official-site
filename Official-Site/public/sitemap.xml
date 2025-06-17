@@ -30,4 +30,34 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://nextlvlgames.site/verify</loc>
+    <lastmod>2024-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://esports.nextlvlgames.site/contact.html</loc>
+    <lastmod>2023-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://esports.nextlvlgames.site/terms-and-conditions.html</loc>
+    <lastmod>2023-07-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://esports.nextlvlgames.site/privacy-policy.html</loc>
+    <lastmod>2023-07-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://esports.nextlvlgames.site/blog.html</loc>
+    <lastmod>2023-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
