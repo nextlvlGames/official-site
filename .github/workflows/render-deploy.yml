@@ -53,7 +53,8 @@ jobs:
           
           # Set up service properties
           SERVICE_NAME="official-site"
-          REPO_URL="https://github.com/nextlvlGames/official-site.git"
+          # Add GitHub PAT to repository URL for authentication
+          REPO_URL="https://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@github.com/nextlvlGames/official-site.git"
           BRANCH="master"
           BUILD_COMMAND="cd Official-Site && npm run build"
           PUBLISH_PATH="Official-Site/dist"
@@ -76,7 +77,7 @@ jobs:
           else
             echo "Service $SERVICE_NAME does not exist. Creating..."
             
-            # Create service with ownerID
+            # Create service with ownerID and authenticated repo URL
             CREATE_RESPONSE=$(curl -s -X POST \
               -H "Authorization: Bearer $RENDER_API_KEY" \
               -H "Content-Type: application/json" \
@@ -96,4 +97,5 @@ jobs:
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
           RENDER_OWNER_ID: ${{ secrets.RENDER_OWNER_ID }}
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
           GITHUB_REPOSITORY: ${{ github.repository }}
