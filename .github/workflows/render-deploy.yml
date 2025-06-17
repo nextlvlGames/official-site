@@ -20,11 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./official-site
+        working-directory: ./Official-Site
 
       - name: Build project
         run: npm run build
-        working-directory: ./official-site
+        working-directory: ./Official-Site
 
       - name: Install Render CLI & jq
         run: |
@@ -51,9 +51,9 @@ jobs:
               --name "$SERVICE_NAME" \
               --region oregon \
               --branch master \
-              --build-command "cd official-site && npm run build" \
-              --static-site-command "cd official-site && npm run start" \
-              --publish-path "official-site/dist"
+              --build-command "cd Official-Site && npm run build" \
+              --static-site-command "cd Official-Site && npm run start" \
+              --publish-path "Official-Site/dist"
             SERVICE_ID=$(render services list --json | jq -r --arg NAME "$SERVICE_NAME" '.[] | select(.service.name == $NAME) | .service.id')
           else
             echo "Service exists: $SERVICE_ID"
