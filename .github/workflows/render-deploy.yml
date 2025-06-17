@@ -10,28 +10,52 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Install Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
-      # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Build the project
       - name: Build project
         run: npm run build
 
-      # Deploy to Render using CLI
-      - name: Deploy to Render
+      - name: Install Render CLI & jq
+        run: |
+          curl -fsSL https://cdn.render.com/cli/install.sh | bash
+          echo "$HOME/.render" >> $GITHUB_PATH
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Login to Render
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
-          curl -fsSL https://render.com/deploy-cli | bash
-          render deploy --service <your-service-id> --branch master --env production
+          render login --api-key $RENDER_API_KEY
+
+      - name: Deploy or Create and Deploy to Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          SERVICE_NAME="official-site"
+          SERVICE_ID=$(render services list --json | jq -r --arg NAME "$SERVICE_NAME" '.[] | select(.service.name == $NAME) | .service.id')
+
+          if [ -z "$SERVICE_ID" ]; then
+            echo "Service not found. Creating..."
+            render services create static-site \
+              --name "$SERVICE_NAME" \
+              --region oregon \
+              --branch master \
+              --build-command "npm run build" \
+              --static-site-command "npm run start" \
+              --publish-path "dist"
+            SERVICE_ID=$(render services list --json | jq -r --arg NAME "$SERVICE_NAME" '.[] | select(.service.name == $NAME) | .service.id')
+          else
+            echo "Service exists: $SERVICE_ID"
+          fi
+
+          echo "Deploying service ID: $SERVICE_ID"
+          render deploy service "$SERVICE_ID" --branch master
