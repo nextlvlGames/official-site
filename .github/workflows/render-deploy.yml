@@ -49,9 +49,11 @@ jobs:
       # Install Render CLI
       - name: Install Render CLI
         run: |
-          curl -fsSL https://cdn.render.com/cli/install.sh | bash
-          echo "$HOME/.render/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.render/bin:$PATH"
+          RENDER_CLI_VERSION="1.0.6" # Replace with the latest version if needed
+          wget https://github.com/renderinc/render-cli/releases/download/v$RENDER_CLI_VERSION/render-cli-v$RENDER_CLI_VERSION-linux-amd64.tar.gz
+          tar -xzf render-cli-v$RENDER_CLI_VERSION-linux-amd64.tar.gz
+          mv render /usr/local/bin/render
+          chmod +x /usr/local/bin/render
 
       # Login to Render
       - name: Login to Render
