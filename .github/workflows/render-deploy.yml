@@ -46,12 +46,12 @@ jobs:
         run: npm run build
         working-directory: ./Official-Site
 
-      # Install Render CLI & jq
-      - name: Install Render CLI & jq
+      # Install Render CLI
+      - name: Install Render CLI
         run: |
           curl -fsSL https://cdn.render.com/cli/install.sh | bash
-          echo "$HOME/.render" >> $GITHUB_PATH
-          sudo apt-get update && sudo apt-get install -y jq
+          echo "$HOME/.render/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.render/bin:$PATH"
 
       # Login to Render
       - name: Login to Render
