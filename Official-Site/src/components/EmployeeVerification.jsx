@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getAnalytics } from 'firebase/analytics';
 
-// Firebase configuration using environment variables
+// Firebase configuration with real credentials for testing
+// NOTE: These should be moved to environment variables before production
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyCePHhW9WS7nMaPCjAVByxPy2EDZdya9-U",
+  authDomain: "nextlevel-api.firebaseapp.com",
+  projectId: "nextlevel-api",
+  storageBucket: "nextlevel-api.firebasestorage.app",
+  messagingSenderId: "527068888043",
+  appId: "1:527068888043:web:8220f1a65b3f25034837ae",
+  measurementId: "G-GVL46CJVML"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const analytics = getAnalytics(app);
 
 function EmployeeVerification() {
   const [employeeData, setEmployeeData] = useState(null);
