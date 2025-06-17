@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NextLvlGames</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              soulblue: {
+                50: '#e6f1ff',
+                100: '#cce3ff',
+                200: '#99c7ff',
+                300: '#66abff',
+                400: '#4d9de0',
+                500: '#3475b4',
+                600: '#1a4b84',
+                700: '#0e325a',
+                800: '#0a1929',
+                900: '#050d14',
+              },
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="bg-soulblue-800 text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
