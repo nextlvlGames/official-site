@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import EmployeeVerification from './components/EmployeeVerification';
 
-function App() {
+function HomePage() {
   const [secretCode, setSecretCode] = useState('');
   const [verificationStatus, setVerificationStatus] = useState(null);
 
@@ -196,7 +198,18 @@ function App() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/verify" element={<EmployeeVerification />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
