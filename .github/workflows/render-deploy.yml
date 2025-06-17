@@ -10,34 +10,57 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Install Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
 
+      # Install dependencies
       - name: Install dependencies
         run: npm install
         working-directory: ./Official-Site
 
+      # Remove unnecessary polyfill packages
+      - name: Remove unnecessary polyfill packages
+        run: |
+          cd Official-Site
+          npm uninstall @esbuild-plugins/node-globals-polyfill @esbuild-plugins/node-modules-polyfill stream-browserify buffer rollup-plugin-node-polyfills
+
+      # Create crypto polyfill
+      - name: Create crypto polyfill
+        run: |
+          cd Official-Site
+          mkdir -p node_modules/crypto-browserify
+          echo "module.exports = { randomBytes: () => Buffer.from([]), getRandomValues: () => Buffer.from([]) };" > node_modules/crypto-browserify/index.js
+
+      # Build the project
       - name: Build project
+        env:
+          NODE_OPTIONS: "--no-experimental-fetch --no-warnings"
+          VITE_DISABLE_NODE_POLYFILLS: "true"
         run: npm run build
         working-directory: ./Official-Site
 
+      # Install Render CLI & jq
       - name: Install Render CLI & jq
         run: |
           curl -fsSL https://cdn.render.com/cli/install.sh | bash
           echo "$HOME/.render" >> $GITHUB_PATH
           sudo apt-get update && sudo apt-get install -y jq
 
+      # Login to Render
       - name: Login to Render
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
           render login --api-key $RENDER_API_KEY
 
+      # Deploy or Create and Deploy to Render
       - name: Deploy or Create and Deploy to Render
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
