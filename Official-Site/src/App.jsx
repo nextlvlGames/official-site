@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import EmployeeVerification from './components/EmployeeVerification';
 
 function HomePage() {
@@ -244,6 +244,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/verify" element={<EmployeeVerification />} />
+        {/* Add a catch-all route that redirects to the home page */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

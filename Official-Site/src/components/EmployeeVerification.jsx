@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+// Fix Firebase imports to be more explicit
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc } from 'firebase/firestore/lite'; // Use lite version
 import { getAnalytics } from 'firebase/analytics';
 
 // Firebase configuration with real credentials for testing
