@@ -61,7 +61,7 @@ function App() {
               Revolutionizing gaming with our proprietary eSports platform and future game development.
             </p>
             <a
-              href="https://esports.nextlvlgames.com"
+              href="https://esports.nextlvlgames.site"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-block bg-soulblue-500 hover:bg-soulblue-400 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition"
@@ -73,11 +73,26 @@ function App() {
 
         {/* About Section */}
         <section id="about" className="bg-soulblue-700 py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-            <h2 className="text-3xl font-bold text-soulblue-400">About Us</h2>
-            <p className="mt-4 text-gray-300">
-              At NextLvlGames, we aim to create immersive gaming experiences and foster a thriving eSports community.
-            </p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <h2 className="text-3xl font-bold text-soulblue-400 text-center">About Us</h2>
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-soulblue-800 p-6 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-soulblue-400 mb-4">Our Mission</h3>
+                <p className="text-gray-300">
+                  At NextLvlGames, our mission is to dominate the gaming industry and visual entertainment space 
+                  through innovative eSports platforms and captivating animated content. We aim to create immersive 
+                  gaming experiences while expanding into animated films and shorts that redefine visual storytelling.
+                </p>
+              </div>
+              <div className="bg-soulblue-800 p-6 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-soulblue-400 mb-4">Our Vision</h3>
+                <p className="text-gray-300">
+                  We envision a future where NextLvlGames is recognized as a leader in both competitive gaming and 
+                  visual entertainment. By leveraging our creative expertise across gaming and animation, we aim to 
+                  build worlds and stories that captivate audiences across multiple mediums.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -93,11 +108,25 @@ function App() {
 
         {/* Future Plans Section */}
         <section id="future" className="bg-soulblue-700 py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-            <h2 className="text-3xl font-bold text-soulblue-400">Future Plans</h2>
-            <p className="mt-4 text-gray-300">
-              We're expanding into game development, with plans to release games on mobile and PC platforms.
-            </p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <h2 className="text-3xl font-bold text-soulblue-400 text-center">Future Plans</h2>
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-soulblue-800 p-6 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-soulblue-400 mb-4">Game Development</h3>
+                <p className="text-gray-300">
+                  We're expanding into game development, with plans to release games on mobile and PC platforms that 
+                  integrate seamlessly with our eSports ecosystem.
+                </p>
+              </div>
+              <div className="bg-soulblue-800 p-6 rounded-lg shadow-lg">
+                <h3 className="text-2xl font-bold text-soulblue-400 mb-4">Animation Studio</h3>
+                <p className="text-gray-300">
+                  We're building an in-house animation studio focused on creating stunning animated films and shorts. 
+                  Unlike traditional streaming platforms, we're focusing on original animated content that complements 
+                  our gaming worlds and expands our storytelling capabilities.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
