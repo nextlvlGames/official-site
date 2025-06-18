@@ -1,27 +1,34 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 import EmployeeVerification from './components/EmployeeVerification';
+import BusinessCanvas from './components/BusinessCanvas';
+import { verifyEmployeeByCode } from './utils/employeeVerification';
 
 function HomePage() {
   const [secretCode, setSecretCode] = useState('');
   const [verificationStatus, setVerificationStatus] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const verifyEmployee = async () => {
     try {
-      const response = await fetch('/api/verify-employee', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ secretCode }),
-      });
-      const data = await response.json();
-      if (data.verified) {
-        setVerificationStatus('Verified');
-      } else {
-        setVerificationStatus('Not Verified');
+      // Use the utility function for verification
+      const result = verifyEmployeeByCode(secretCode);
+      
+      // Update the UI with the verification result
+      setVerificationStatus(result.message);
+      
+      // If verification was successful, redirect to the employee page
+      if (result.success && result.redirectUrl) {
+        window.location.href = result.redirectUrl;
       }
     } catch (error) {
+      console.error('Error verifying employee:', error);
       setVerificationStatus('Error verifying employee');
     }
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
@@ -30,43 +37,100 @@ function HomePage() {
       <nav className="bg-soulblue-700 shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
           <div className="flex items-center">
-            <img src="/images/logo.png" alt="NextLvlGames" className="h-10 w-auto" />
-            <span className="ml-3 text-xl font-bold">NextLvlGames</span>
+            <Link to="/" className="flex items-center">
+              <img src="/images/logo.png" alt="NextLvlGames" className="h-8 sm:h-10 w-auto" />
+              <span className="ml-2 sm:ml-3 text-lg sm:text-xl font-bold">NextLvlGames</span>
+            </Link>
           </div>
-          <div className="hidden md:flex space-x-6">
-            <a href="#home" className="text-white hover:text-soulblue-400">Home</a>
-            <a href="#about" className="text-white hover:text-soulblue-400">About</a>
-            <a href="#products" className="text-white hover:text-soulblue-400">Products</a>
-            <a href="#future" className="text-white hover:text-soulblue-400">Future</a>
-            <a href="#contact" className="text-white hover:text-soulblue-400">Contact</a>
+          <div className="hidden md:flex space-x-4 lg:space-x-6">
+            <a href="#home" className="text-white hover:text-soulblue-400 text-sm lg:text-base">Home</a>
+            <a href="#about" className="text-white hover:text-soulblue-400 text-sm lg:text-base">About</a>
+            <a href="#products" className="text-white hover:text-soulblue-400 text-sm lg:text-base">Products</a>
+            <a href="#future" className="text-white hover:text-soulblue-400 text-sm lg:text-base">Future</a>
+            <a href="#contact" className="text-white hover:text-soulblue-400 text-sm lg:text-base">Contact</a>
+            <Link to="/business-canvas" className="text-white hover:text-soulblue-400 text-sm lg:text-base">Business Plan</Link>
           </div>
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
-            <button className="text-white focus:outline-none">
+            <button 
+              onClick={toggleMobileMenu}
+              className="text-white focus:outline-none"
+              aria-label="Toggle menu"
+            >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
           </div>
         </div>
+        
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-soulblue-800">
+              <a 
+                href="#home" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-soulblue-400 hover:bg-soulblue-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </a>
+              <a 
+                href="#about" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-soulblue-400 hover:bg-soulblue-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About
+              </a>
+              <a 
+                href="#products" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-soulblue-400 hover:bg-soulblue-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Products
+              </a>
+              <a 
+                href="#future" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-soulblue-400 hover:bg-soulblue-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Future
+              </a>
+              <a 
+                href="#contact" 
+                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-soulblue-400 hover:bg-soulblue-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact
+              </a>
+              <Link 
+                to="/business-canvas"
+                className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-soulblue-400 hover:bg-soulblue-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Business Plan
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Main Content */}
       <main className="flex-grow">
         {/* Hero Section */}
-        <section id="home" className="bg-soulblue-800 py-20 text-center">
+        <section id="home" className="bg-soulblue-800 py-12 sm:py-16 md:py-20 text-center">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
-            <h1 className="text-4xl font-extrabold text-white sm:text-5xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">
               Welcome to <span className="text-soulblue-400">NextLvlGames</span>
             </h1>
-            <p className="mt-4 text-lg text-gray-300">
+            <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-300 px-2">
               Revolutionizing gaming with our proprietary eSports platform and future game development.
             </p>
             <a
               href="https://esports.nextlvlgames.site"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-block bg-soulblue-500 hover:bg-soulblue-400 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition"
+              className="mt-4 sm:mt-6 inline-block bg-soulblue-500 hover:bg-soulblue-400 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-lg shadow-lg transition text-sm sm:text-base"
             >
               Explore Our eSports Platform
             </a>
@@ -74,7 +138,7 @@ function HomePage() {
         </section>
 
         {/* About Section */}
-        <section id="about" className="bg-soulblue-700 py-16">
+        <section id="about" className="bg-soulblue-700 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <h2 className="text-3xl font-bold text-soulblue-400 text-center">About Us</h2>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -99,7 +163,7 @@ function HomePage() {
         </section>
 
         {/* Products Section */}
-        <section id="products" className="bg-soulblue-800 py-16">
+        <section id="products" className="bg-soulblue-800 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <h2 className="text-3xl font-bold text-soulblue-400">Our Product</h2>
             <p className="mt-4 text-gray-300">
@@ -109,7 +173,7 @@ function HomePage() {
         </section>
 
         {/* Future Plans Section */}
-        <section id="future" className="bg-soulblue-700 py-16">
+        <section id="future" className="bg-soulblue-700 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <h2 className="text-3xl font-bold text-soulblue-400 text-center">Future Plans</h2>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -133,11 +197,11 @@ function HomePage() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="bg-soulblue-800 py-16">
+        <section id="contact" className="bg-soulblue-800 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-            <h2 className="text-3xl font-bold text-soulblue-400">Contact Us</h2>
-            <p className="mt-4 text-gray-300">Have questions? Reach out to us!</p>
-            <form className="mt-8 max-w-md mx-auto space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-soulblue-400">Contact Us</h2>
+            <p className="mt-3 sm:mt-4 text-gray-300">Have questions? Reach out to us!</p>
+            <form className="mt-6 sm:mt-8 max-w-md mx-auto space-y-3 sm:space-y-4 px-3 sm:px-0">
               <input
                 type="text"
                 placeholder="Your Name"
@@ -163,11 +227,11 @@ function HomePage() {
         </section>
 
         {/* Employee Verification Section */}
-        <section id="employee-verification" className="bg-soulblue-700 py-16">
+        <section id="employee-verification" className="bg-soulblue-700 py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-            <h2 className="text-3xl font-bold text-soulblue-400">Employee Verification</h2>
-            <p className="mt-4 text-gray-300">Enter your secret code to verify your employee status.</p>
-            <div className="mt-8 max-w-md mx-auto space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-soulblue-400">Employee Verification</h2>
+            <p className="mt-3 sm:mt-4 text-gray-300">Enter your secret code to verify your employee status.</p>
+            <div className="mt-6 sm:mt-8 max-w-md mx-auto space-y-3 sm:space-y-4 px-3 sm:px-0">
               <input
                 type="text"
                 placeholder="Enter Secret Code"
@@ -182,7 +246,7 @@ function HomePage() {
                 Verify
               </button>
               {verificationStatus && (
-                <p className={`mt-4 font-bold ${verificationStatus === 'Verified' ? 'text-green-400' : 'text-red-400'}`}>
+                <p className={`mt-3 sm:mt-4 font-bold ${verificationStatus === 'Verified' ? 'text-green-400' : 'text-red-400'}`}>
                   {verificationStatus}
                 </p>
               )}
@@ -192,17 +256,17 @@ function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-soulblue-900 py-8">
+      <footer className="bg-soulblue-900 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400">&copy; 2024 NextLvlGames. All rights reserved.</p>
+            <p className="text-gray-400 text-sm sm:text-base">&copy; 2024 NextLvlGames. All rights reserved.</p>
             
-            <div className="mt-4 md:mt-0 flex flex-wrap justify-center space-x-4">
+            <div className="mt-4 md:mt-0 flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
               <a 
                 href="https://esports.nextlvlgames.site/contact.html" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-soulblue-400"
+                className="text-gray-400 hover:text-soulblue-400 text-sm sm:text-base"
               >
                 Contact
               </a>
@@ -210,7 +274,7 @@ function HomePage() {
                 href="https://esports.nextlvlgames.site/terms-and-conditions.html" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-soulblue-400"
+                className="text-gray-400 hover:text-soulblue-400 text-sm sm:text-base"
               >
                 Terms &amp; Conditions
               </a>
@@ -218,7 +282,7 @@ function HomePage() {
                 href="https://esports.nextlvlgames.site/privacy-policy.html" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-soulblue-400"
+                className="text-gray-400 hover:text-soulblue-400 text-sm sm:text-base"
               >
                 Privacy Policy
               </a>
@@ -226,7 +290,7 @@ function HomePage() {
                 href="https://esports.nextlvlgames.site/blog.html" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-gray-400 hover:text-soulblue-400"
+                className="text-gray-400 hover:text-soulblue-400 text-sm sm:text-base"
               >
                 Blog
               </a>
@@ -238,12 +302,95 @@ function HomePage() {
   );
 }
 
+// Add a NavBar component for shared navigation across pages
+function NavBar({ transparent = false }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  return (
+    <nav className={`${transparent ? 'bg-transparent' : 'bg-soulblue-700'} shadow-lg sticky top-0 z-50`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+        <div className="flex items-center">
+          <Link to="/" className="flex items-center">
+            <img src="/images/logo.png" alt="NextLvlGames" className="h-8 sm:h-10 w-auto" />
+            <span className="ml-2 sm:ml-3 text-lg sm:text-xl font-bold">NextLvlGames</span>
+          </Link>
+        </div>
+        <div className="hidden md:flex space-x-4 lg:space-x-6">
+          <Link to="/" className="text-white hover:text-soulblue-400 text-sm lg:text-base">Home</Link>
+          <Link to="/business-canvas" className="text-white hover:text-soulblue-400 text-sm lg:text-base">Business Plan</Link>
+        </div>
+        {/* Mobile menu button */}
+        <div className="md:hidden flex items-center">
+          <button 
+            onClick={toggleMobileMenu}
+            className="text-white focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-soulblue-800">
+            <Link
+              to="/"
+              className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-soulblue-400 hover:bg-soulblue-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              to="/business-canvas"
+              className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-soulblue-400 hover:bg-soulblue-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Business Plan
+            </Link>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+// Update the BusinessCanvas component wrapper
+function BusinessCanvasWrapper() {
+  return (
+    <div className="min-h-screen flex flex-col bg-soulblue-800">
+      <NavBar />
+      <BusinessCanvas />
+    </div>
+  );
+}
+
+// Update the EmployeeVerification component wrapper
+function EmployeeVerificationWrapper() {
+  return (
+    <div className="min-h-screen flex flex-col bg-soulblue-800">
+      <NavBar />
+      <div className="flex-grow">
+        <EmployeeVerification />
+      </div>
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/verify" element={<EmployeeVerification />} />
+        <Route path="/verify" element={<EmployeeVerificationWrapper />} />
+        <Route path="/business-canvas" element={<BusinessCanvasWrapper />} />
         {/* Add a catch-all route that redirects to the home page */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
