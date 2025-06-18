@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
 export default defineConfig({
   plugins: [react()],
@@ -11,12 +10,6 @@ export default defineConfig({
       define: {
         global: 'globalThis',
       },
-      // Enable esbuild polyfill plugins
-      plugins: [
-        NodeGlobalsPolyfillPlugin({
-          buffer: true,
-        }),
-      ],
     },
   },
   build: {
@@ -24,10 +17,6 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
       },
-      // Externalize deps that shouldn't be bundled
-      external: [
-        // Add any dependencies that should be treated as external
-      ],
     },
     // Generate a _redirects file in the build output
     copyPublicDir: true,
@@ -48,3 +37,4 @@ export default defineConfig({
     historyApiFallback: true,
   },
 })
+  
