@@ -31,7 +31,7 @@ function BusinessCanvas() {
           >
             <div className="bg-soulblue-600 px-4 py-3 flex justify-between items-center">
               <h3 className="text-xl font-semibold text-white">Current Focus</h3>
-              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2024</span>
+              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2025</span>
             </div>
             <div className="p-4">
               <div className="flex items-center mb-4">
@@ -92,7 +92,7 @@ function BusinessCanvas() {
           >
             <div className="bg-soulblue-600 px-4 py-3 flex justify-between items-center">
               <h3 className="text-xl font-semibold text-white">Near Future</h3>
-              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2024-2025</span>
+              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2025-2026</span>
             </div>
             <div className="p-4">
               <div className="flex items-center mb-4">
@@ -152,7 +152,7 @@ function BusinessCanvas() {
           >
             <div className="bg-soulblue-600 px-4 py-3 flex justify-between items-center">
               <h3 className="text-xl font-semibold text-white">Future Expansion</h3>
-              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2025-2027</span>
+              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2026-2027</span>
             </div>
             <div className="p-4">
               <div className="flex items-center mb-4">
