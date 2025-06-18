@@ -20,7 +20,7 @@ function SubdomainShowcase() {
       image: "/images/learn-domain.jpg", 
       fallbackImage: "https://via.placeholder.com/600x300/1a4b84/ffffff?text=Learning+Platform",
       features: ["Interactive tutorials", "Expert masterclasses", "Project-based learning", "Community challenges"],
-      launchDate: "Q1 2026"
+      launchDate: "Q4 2025"
     },
     {
       name: "freetoplay.nextlvlgames.site",
@@ -29,7 +29,7 @@ function SubdomainShowcase() {
       image: "/images/freetoplay-domain.jpg",
       fallbackImage: "https://via.placeholder.com/600x300/1a4b84/ffffff?text=Free+To+Play+Hub",
       features: ["Instant-play browser games", "Exclusive demos", "Seasonal events", "Community tournaments"],
-      launchDate: "Q2 2026"
+      launchDate: "Q1 2026"
     },
     {
       name: "news.nextlvlgames.site",
@@ -38,7 +38,7 @@ function SubdomainShowcase() {
       image: "/images/news-domain.jpg",
       fallbackImage: "https://via.placeholder.com/600x300/1a4b84/ffffff?text=Gaming+News",
       features: ["Daily updates", "Event coverage", "Developer interviews", "Community spotlights"],
-      launchDate: "Q3 2026"
+      launchDate: "Q2 2026"
     },
     {
       name: "films.nextlvlgames.site",
@@ -47,7 +47,7 @@ function SubdomainShowcase() {
       image: "/images/films-domain.jpg",
       fallbackImage: "https://via.placeholder.com/600x300/1a4b84/ffffff?text=Animated+Films",
       features: ["Original series", "Behind-the-scenes", "Character spotlights", "Universe lore"],
-      launchDate: "Q1 2027"
+      launchDate: "Q4 2026"
     }
   ];
 

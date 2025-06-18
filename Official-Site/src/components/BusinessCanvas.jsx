@@ -223,78 +223,69 @@ function BusinessCanvas() {
           </div>
         </div>
         
-        {/* Animated Films Showcase - Updated to clarify future plans */}
+        {/* Animated Films Showcase - Updated to be more conceptual without specific details */}
         <div className="bg-soulblue-700 rounded-lg shadow-lg p-6 sm:p-8 mb-12">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-soulblue-500 text-white text-xs py-1 px-3 rounded-full mr-3">
-              PLANNED FOR 2026-2027
+              PLANNED FOR 2025-2026
             </div>
             <h2 className="text-2xl font-bold text-soulblue-400 text-center">Animation Studio Concept</h2>
           </div>
           
           <p className="text-gray-300 text-center mb-8 max-w-3xl mx-auto">
-            As part of our future expansion plans, we're developing concepts for an animation studio that will
-            bring our game worlds to life. These are conceptual projects that we plan to develop once our gaming
-            platform is established.
+            As part of our 2025 roadmap, we're developing the concept for an animation studio that will
+            bring our game worlds to life. We're in the planning stages of creating original animated content
+            that will complement our gaming ecosystem.
           </p>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 border border-soulblue-600 border-opacity-30">
-              <div className="relative">
-                <img 
-                  src="/images/animation1.jpg" 
-                  alt="SciFi Animation Concept" 
-                  className="w-full h-48 object-cover object-center"
-                  onError={(e) => {e.target.onerror = null; e.target.src = "https://via.placeholder.com/400x200/1a4b84/ffffff?text=Concept+Art"}}
-                />
-                <div className="absolute top-0 right-0 bg-soulblue-900 text-white text-xs py-1 px-2 m-2 rounded">
-                  Concept Only
-                </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg p-5 border border-soulblue-600 border-opacity-30">
+              <div className="text-center mb-3">
+                <span className="text-3xl">🎬</span>
               </div>
-              <div className="p-4">
-                <h3 className="text-soulblue-400 font-bold text-lg">Cyber Nexus</h3>
-                <p className="text-gray-300 text-sm mt-2">A futuristic short film exploring the boundaries between humanity and technology in our game universe.</p>
-                <div className="mt-3 text-xs text-gray-400">Target: 2026</div>
-              </div>
+              <h3 className="text-soulblue-400 font-bold text-lg text-center mb-3">Short Films</h3>
+              <p className="text-gray-300 text-sm">
+                Short-form animated content to introduce characters and worlds from our gaming universe
+              </p>
             </div>
             
-            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 border border-soulblue-600 border-opacity-30">
-              <div className="relative">
-                <img 
-                  src="/images/animation2.jpg" 
-                  alt="Fantasy Animation Concept" 
-                  className="w-full h-48 object-cover object-center"
-                  onError={(e) => {e.target.onerror = null; e.target.src = "https://via.placeholder.com/400x200/1a4b84/ffffff?text=Concept+Art"}}
-                />
-                <div className="absolute top-0 right-0 bg-soulblue-900 text-white text-xs py-1 px-2 m-2 rounded">
-                  Concept Only
-                </div>
+            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg p-5 border border-soulblue-600 border-opacity-30">
+              <div className="text-center mb-3">
+                <span className="text-3xl">📺</span>
               </div>
-              <div className="p-4">
-                <h3 className="text-soulblue-400 font-bold text-lg">Realm Walkers</h3>
-                <p className="text-gray-300 text-sm mt-2">An epic fantasy series based on our upcoming RPG, featuring breathtaking worlds and compelling characters.</p>
-                <div className="mt-3 text-xs text-gray-400">Target: 2026</div>
-              </div>
+              <h3 className="text-soulblue-400 font-bold text-lg text-center mb-3">Series Development</h3>
+              <p className="text-gray-300 text-sm">
+                Multi-episode series that expand on game lore and introduce new storylines
+              </p>
             </div>
             
-            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 border border-soulblue-600 border-opacity-30">
-              <div className="relative">
-                <img 
-                  src="/images/animation3.jpg" 
-                  alt="Stylized Animation Concept" 
-                  className="w-full h-48 object-cover object-center"
-                  onError={(e) => {e.target.onerror = null; e.target.src = "https://via.placeholder.com/400x200/1a4b84/ffffff?text=Concept+Art"}}
-                />
-                <div className="absolute top-0 right-0 bg-soulblue-900 text-white text-xs py-1 px-2 m-2 rounded">
-                  Concept Only
-                </div>
+            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg p-5 border border-soulblue-600 border-opacity-30">
+              <div className="text-center mb-3">
+                <span className="text-3xl">🎭</span>
               </div>
-              <div className="p-4">
-                <h3 className="text-soulblue-400 font-bold text-lg">Pixel Legacy</h3>
-                <p className="text-gray-300 text-sm mt-2">A nostalgic journey through gaming history with our unique art style blending retro and modern aesthetics.</p>
-                <div className="mt-3 text-xs text-gray-400">Target: 2027</div>
-              </div>
+              <h3 className="text-soulblue-400 font-bold text-lg text-center mb-3">Feature Productions</h3>
+              <p className="text-gray-300 text-sm">
+                Long-form animated films showcasing the full depth of our creative universe
+              </p>
             </div>
+          </div>
+          
+          <div className="mt-8 bg-soulblue-800 p-4 rounded-lg max-w-3xl mx-auto">
+            <h4 className="text-soulblue-400 font-bold mb-2 text-center">Development Timeline</h4>
+            <ul className="space-y-2">
+              <li className="flex items-center">
+                <span className="bg-soulblue-700 text-xs text-white px-2 py-1 rounded mr-2">2025</span>
+                <span className="text-gray-300">Studio concept development and pre-production planning</span>
+              </li>
+              <li className="flex items-center">
+                <span className="bg-soulblue-700 text-xs text-white px-2 py-1 rounded mr-2">2026</span>
+                <span className="text-gray-300">First animated short releases and series development</span>
+              </li>
+              <li className="flex items-center">
+                <span className="bg-soulblue-700 text-xs text-white px-2 py-1 rounded mr-2">2027</span>
+                <span className="text-gray-300">Full-length animated feature production</span>
+              </li>
+            </ul>
           </div>
         </div>
         
@@ -342,7 +333,7 @@ function BusinessCanvas() {
       <footer className="bg-soulblue-900 py-4 sm:py-6 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col items-center">
-            <p className="text-gray-400 mb-2 sm:mb-3 text-xs sm:text-sm">&copy; 2024 NextLvlGames. All rights reserved.</p>
+            <p className="text-gray-400 mb-2 sm:mb-3 text-xs sm:text-sm">&copy; 2025 NextLvlGames. All rights reserved.</p>
             
             <div className="flex flex-wrap justify-center gap-2 sm:gap-4 text-xs sm:text-sm">
               <a 
@@ -386,4 +377,4 @@ function BusinessCanvas() {
 }
 
 export default BusinessCanvas;
-            
+          
