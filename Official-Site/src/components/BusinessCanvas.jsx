@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Timeline from './Timeline';
+import SubdomainShowcase from './SubdomainShowcase';
 
 function BusinessCanvas() {
   const [activeSection, setActiveSection] = useState(null);
@@ -20,18 +22,37 @@ function BusinessCanvas() {
           </p>
         </div>
         
+        {/* Visual Timeline Component */}
+        <div className="mb-12 sm:mb-16">
+          <h2 className="text-2xl font-bold text-soulblue-400 text-center mb-8">Our Growth Journey</h2>
+          <Timeline />
+        </div>
+        
         {/* Visual Business Canvas - More responsive grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-8 sm:mb-12">
           {/* Current Focus */}
           <div 
-            className={`bg-soulblue-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 cursor-pointer ${
-              activeSection === 'current' ? 'col-span-1 sm:col-span-2 lg:col-span-3 row-span-auto' : ''
+            className={`bg-soulblue-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 cursor-pointer transform hover:shadow-xl ${
+              activeSection === 'current' ? 'col-span-1 sm:col-span-2 lg:col-span-3 row-span-auto scale-100' : 'hover:scale-[1.02]'
             }`}
             onClick={() => handleSectionClick('current')}
           >
             <div className="bg-soulblue-600 px-4 py-3 flex justify-between items-center">
               <h3 className="text-xl font-semibold text-white">Current Focus</h3>
-              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2025</span>
+              <div className="flex items-center">
+                <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm mr-2">2025</span>
+                <span className="text-white">
+                  {activeSection === 'current' ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </span>
+              </div>
             </div>
             <div className="p-4">
               <div className="flex items-center mb-4">
@@ -40,42 +61,31 @@ function BusinessCanvas() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </div>
-                <h4 className="text-lg font-medium text-white">eSports Platform</h4>
+                <h4 className="text-lg font-medium text-white">eSports Platform & AI Integration</h4>
               </div>
               <p className="text-gray-300 ml-11">
-                Our proprietary tournament management system and performance analytics platform for competitive gaming.
+                Our proprietary tournament management system and performance analytics platform, enhanced with cutting-edge AI capabilities.
               </p>
               
               {activeSection === 'current' && (
                 <div className="mt-6 ml-11 space-y-3">
                   <div className="bg-soulblue-800 p-3 rounded">
-                    <h5 className="text-soulblue-400 font-medium">Key Features:</h5>
+                    <h5 className="text-soulblue-400 font-medium">Key Focus Areas:</h5>
                     <ul className="list-disc list-inside text-gray-300 mt-2 ml-2">
-                      <li>Tournament creation and management</li>
-                      <li>Player performance analytics</li>
-                      <li>Team management tools</li>
-                      <li>Live match tracking</li>
-                      <li>Integrated streaming capabilities</li>
+                      <li><span className="text-white font-medium">Q1-Q2:</span> eSports platform launch with tournament management</li>
+                      <li><span className="text-white font-medium">Q3:</span> AI-powered analytics and features rollout</li>
+                      <li><span className="text-white font-medium">Q4:</span> Integration of AI with user-generated content</li>
                     </ul>
                   </div>
                   
                   <div className="bg-soulblue-800 p-3 rounded">
-                    <h5 className="text-soulblue-400 font-medium">Target Market:</h5>
+                    <h5 className="text-soulblue-400 font-medium">AI Capabilities:</h5>
                     <ul className="list-disc list-inside text-gray-300 mt-2 ml-2">
-                      <li>Amateur and professional esports teams</li>
-                      <li>Tournament organizers</li>
-                      <li>Gaming communities</li>
-                      <li>Streaming platforms</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-soulblue-800 p-3 rounded">
-                    <h5 className="text-soulblue-400 font-medium">Revenue Model:</h5>
-                    <ul className="list-disc list-inside text-gray-300 mt-2 ml-2">
-                      <li>Subscription-based platform access</li>
-                      <li>Premium features and analytics</li>
-                      <li>Tournament hosting fees</li>
-                      <li>Advertising and sponsorships</li>
+                      <li>Advanced performance analytics for players</li>
+                      <li>AI-powered matchmaking and tournament balancing</li>
+                      <li>Custom AI opponents with adaptive difficulty</li>
+                      <li>Content generation tools for teams and players</li>
+                      <li>Strategy assistants for competitive play</li>
                     </ul>
                   </div>
                 </div>
@@ -85,14 +95,27 @@ function BusinessCanvas() {
           
           {/* Near Future */}
           <div 
-            className={`bg-soulblue-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 cursor-pointer ${
-              activeSection === 'near' ? 'col-span-1 sm:col-span-2 lg:col-span-3 row-span-auto' : ''
+            className={`bg-soulblue-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 cursor-pointer transform hover:shadow-xl ${
+              activeSection === 'near' ? 'col-span-1 sm:col-span-2 lg:col-span-3 row-span-auto scale-100' : 'hover:scale-[1.02]'
             }`}
             onClick={() => handleSectionClick('near')}
           >
             <div className="bg-soulblue-600 px-4 py-3 flex justify-between items-center">
               <h3 className="text-xl font-semibold text-white">Near Future</h3>
-              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2025-2026</span>
+              <div className="flex items-center">
+                <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm mr-2">2025-2026</span>
+                <span className="text-white">
+                  {activeSection === 'near' ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </span>
+              </div>
             </div>
             <div className="p-4">
               <div className="flex items-center mb-4">
@@ -145,14 +168,27 @@ function BusinessCanvas() {
           
           {/* Future Expansion */}
           <div 
-            className={`bg-soulblue-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 cursor-pointer ${
-              activeSection === 'future' ? 'col-span-1 sm:col-span-2 lg:col-span-3 row-span-auto' : ''
+            className={`bg-soulblue-700 rounded-lg shadow-lg overflow-hidden transition-all duration-300 cursor-pointer transform hover:shadow-xl ${
+              activeSection === 'future' ? 'col-span-1 sm:col-span-2 lg:col-span-3 row-span-auto scale-100' : 'hover:scale-[1.02]'
             }`}
             onClick={() => handleSectionClick('future')}
           >
             <div className="bg-soulblue-600 px-4 py-3 flex justify-between items-center">
               <h3 className="text-xl font-semibold text-white">Future Expansion</h3>
-              <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm">2026-2027</span>
+              <div className="flex items-center">
+                <span className="text-white bg-soulblue-500 px-2 py-1 rounded text-sm mr-2">2026-2027</span>
+                <span className="text-white">
+                  {activeSection === 'future' ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  )}
+                </span>
+              </div>
             </div>
             <div className="p-4">
               <div className="flex items-center mb-4">
@@ -168,33 +204,9 @@ function BusinessCanvas() {
               </p>
               
               {activeSection === 'future' && (
-                <div className="mt-6 ml-11 space-y-3">
-                  <div className="bg-soulblue-800 p-3 rounded grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <h5 className="text-soulblue-400 font-medium">learn.nextlvlgames.site</h5>
-                      <p className="text-gray-300 text-sm mt-1">Educational content focused on game development, design, and eSports skills</p>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-soulblue-400 font-medium">news.nextlvlgames.site</h5>
-                      <p className="text-gray-300 text-sm mt-1">Gaming industry news, updates on our products, and eSports coverage</p>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-soulblue-400 font-medium">freetoplay.nextlvlgames.site</h5>
-                      <p className="text-gray-300 text-sm mt-1">Portal for free browser-based games and demos of our premium titles</p>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-soulblue-400 font-medium">ai.nextlvlgames.site</h5>
-                      <p className="text-gray-300 text-sm mt-1">AI-powered gaming tools, analytics, and experimental features</p>
-                    </div>
-                    
-                    <div>
-                      <h5 className="text-soulblue-400 font-medium">films.nextlvlgames.site</h5>
-                      <p className="text-gray-300 text-sm mt-1">Original animated films and shorts set in our game universes</p>
-                    </div>
-                  </div>
+                <div className="mt-6 ml-11 space-y-6">
+                  {/* Replace the old subdomain section with the enhanced visual component */}
+                  <SubdomainShowcase />
                   
                   <div className="bg-soulblue-800 p-3 rounded">
                     <h5 className="text-soulblue-400 font-medium">Content Strategy:</h5>
@@ -207,6 +219,81 @@ function BusinessCanvas() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+        
+        {/* Animated Films Showcase - Updated to clarify future plans */}
+        <div className="bg-soulblue-700 rounded-lg shadow-lg p-6 sm:p-8 mb-12">
+          <div className="flex items-center justify-center mb-6">
+            <div className="bg-soulblue-500 text-white text-xs py-1 px-3 rounded-full mr-3">
+              PLANNED FOR 2026-2027
+            </div>
+            <h2 className="text-2xl font-bold text-soulblue-400 text-center">Animation Studio Concept</h2>
+          </div>
+          
+          <p className="text-gray-300 text-center mb-8 max-w-3xl mx-auto">
+            As part of our future expansion plans, we're developing concepts for an animation studio that will
+            bring our game worlds to life. These are conceptual projects that we plan to develop once our gaming
+            platform is established.
+          </p>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 border border-soulblue-600 border-opacity-30">
+              <div className="relative">
+                <img 
+                  src="/images/animation1.jpg" 
+                  alt="SciFi Animation Concept" 
+                  className="w-full h-48 object-cover object-center"
+                  onError={(e) => {e.target.onerror = null; e.target.src = "https://via.placeholder.com/400x200/1a4b84/ffffff?text=Concept+Art"}}
+                />
+                <div className="absolute top-0 right-0 bg-soulblue-900 text-white text-xs py-1 px-2 m-2 rounded">
+                  Concept Only
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-soulblue-400 font-bold text-lg">Cyber Nexus</h3>
+                <p className="text-gray-300 text-sm mt-2">A futuristic short film exploring the boundaries between humanity and technology in our game universe.</p>
+                <div className="mt-3 text-xs text-gray-400">Target: 2026</div>
+              </div>
+            </div>
+            
+            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 border border-soulblue-600 border-opacity-30">
+              <div className="relative">
+                <img 
+                  src="/images/animation2.jpg" 
+                  alt="Fantasy Animation Concept" 
+                  className="w-full h-48 object-cover object-center"
+                  onError={(e) => {e.target.onerror = null; e.target.src = "https://via.placeholder.com/400x200/1a4b84/ffffff?text=Concept+Art"}}
+                />
+                <div className="absolute top-0 right-0 bg-soulblue-900 text-white text-xs py-1 px-2 m-2 rounded">
+                  Concept Only
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-soulblue-400 font-bold text-lg">Realm Walkers</h3>
+                <p className="text-gray-300 text-sm mt-2">An epic fantasy series based on our upcoming RPG, featuring breathtaking worlds and compelling characters.</p>
+                <div className="mt-3 text-xs text-gray-400">Target: 2026</div>
+              </div>
+            </div>
+            
+            <div className="bg-soulblue-800 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 border border-soulblue-600 border-opacity-30">
+              <div className="relative">
+                <img 
+                  src="/images/animation3.jpg" 
+                  alt="Stylized Animation Concept" 
+                  className="w-full h-48 object-cover object-center"
+                  onError={(e) => {e.target.onerror = null; e.target.src = "https://via.placeholder.com/400x200/1a4b84/ffffff?text=Concept+Art"}}
+                />
+                <div className="absolute top-0 right-0 bg-soulblue-900 text-white text-xs py-1 px-2 m-2 rounded">
+                  Concept Only
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-soulblue-400 font-bold text-lg">Pixel Legacy</h3>
+                <p className="text-gray-300 text-sm mt-2">A nostalgic journey through gaming history with our unique art style blending retro and modern aesthetics.</p>
+                <div className="mt-3 text-xs text-gray-400">Target: 2027</div>
+              </div>
             </div>
           </div>
         </div>
@@ -299,3 +386,4 @@ function BusinessCanvas() {
 }
 
 export default BusinessCanvas;
+            

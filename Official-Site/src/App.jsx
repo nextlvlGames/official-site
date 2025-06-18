@@ -122,7 +122,7 @@ function HomePage() {
                 </svg>
               </a>
               <a 
-                href="https://t.me/nextlvlgames" 
+                href="https://t.me/+4F5LbUuTnqRhNzdl" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="transition-transform hover:scale-110"
@@ -155,7 +155,7 @@ function HomePage() {
                 </svg>
               </a>
               <a 
-                href="https://wa.me/message/NEXTLVLGAMES" 
+                href="https://chat.whatsapp.com/HGocpgqKS23Ed6d6nVI1kP" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="transition-transform hover:scale-110"
@@ -272,7 +272,7 @@ function HomePage() {
       <footer className="bg-soulblue-900 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm sm:text-base">&copy; 2024 NextLvlGames. All rights reserved.</p>
+            <p className="text-gray-400 text-sm sm:text-base">&copy; 2025 NextLvlGames. All rights reserved.</p>
             
             <div className="mt-4 md:mt-0 flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4">
               <a 
