@@ -9,9 +9,11 @@ export const verifyEmployeeByCode = (secretCode) => {
   console.log('Browser location:', window.location);
   console.log('Document URL:', document.URL);
   console.log('Pathname:', window.location.pathname);
-    try {
+  
+  try {
     // For now, we're hard-coding the verification for the specific ID
-    if (secretCode === 'l29sm5nv7ubr') {      // Use environment variables to determine if we're in production
+    if (secretCode === 'l29sm5nv7ubr') {
+      // Use environment variables to determine if we're in production
       const isProduction = import.meta.env.VITE_IS_PRODUCTION === 'true';
       const domain = isProduction ? 'https://nextlvlgames.site' : window.location.origin;
       const redirectUrl = `/verify?employee_id=${secretCode}`;
@@ -31,31 +33,38 @@ export const verifyEmployeeByCode = (secretCode) => {
       console.log('Hostname:', window.location.hostname);
       console.log('Available routes check - current URL structure:');
       console.log('Request headers:', document.cookie ? 'Cookies available' : 'No cookies');
-        // Debug info for checking URL construction
+      
+      // Debug info for checking URL construction
       try {
         const constructedUrl = new URL(redirectUrl, window.location.origin);
         console.log('Constructed URL object:', constructedUrl.toString());
         console.log('URL pathname:', constructedUrl.pathname);
         console.log('URL search params:', constructedUrl.search);
-        
-        // Check if the route exists in the application
         console.log('Checking if route handler exists for:', constructedUrl.pathname);
       } catch (urlError) {
         console.error('Error constructing URL:', urlError);
-      }// Build both relative and absolute URLs to give the calling code more options
+      }
+      
+      // Return enhanced response with more redirection options
       return { 
         success: true, 
         message: 'Verified',
+        // The relative URL path for client-side routing
         redirectUrl: redirectUrl,
-        absoluteUrl: `${domain}${redirectUrl}`,
-        code: secretCode
+        // The full URL with domain for direct browser navigation
+        fullUrl: `${domain}${redirectUrl}`,
+        // Just the raw employee ID
+        employeeId: secretCode,
+        // State flag that can be used by the component
+        verified: true
       };
     } else {
       console.log('Employee verification failed - Invalid code provided');
       return { 
         success: false, 
         message: 'Not Verified',
-        redirectUrl: null
+        redirectUrl: null,
+        verified: false
       };
     }
   } catch (error) {
@@ -63,7 +72,8 @@ export const verifyEmployeeByCode = (secretCode) => {
     return { 
       success: false, 
       message: 'Error verifying employee',
-      redirectUrl: null
+      redirectUrl: null,
+      verified: false
     };
   }
 };
