@@ -5,18 +5,43 @@
  */
 export const verifyEmployeeByCode = (secretCode) => {
   console.log('Verifying employee with code:', secretCode);
+  console.log('Current environment:', process.env.NODE_ENV || 'development');
+  console.log('Browser location:', window.location);
+  console.log('Document URL:', document.URL);
+  console.log('Pathname:', window.location.pathname);
   
   try {
     // For now, we're hard-coding the verification for the specific ID
     if (secretCode === 'l29sm5nv7ubr') {
+      // Use domain-specific redirect URL construction
+      const isDev = process.env.NODE_ENV !== 'production';
+      const domain = isDev ? window.location.origin : 'https://nextlvlgames.site';
+      const redirectUrl = `/verify?employee_id=${secretCode}`;
+      
+      console.log('Environment:', isDev ? 'Development' : 'Production');
+      console.log('Using domain:', domain);
       console.log('Employee verified successfully');
-      return { 
+      console.log('Generated redirect URL:', redirectUrl);
+      console.log('Full URL would be:', `${domain}${redirectUrl}`);
+      console.log('Base URL:', window.location.origin);
+      console.log('Protocol:', window.location.protocol);
+      console.log('Host:', window.location.host);
+      console.log('Hostname:', window.location.hostname);
+      console.log('Available routes check - current URL structure:');
+      console.log('Request headers:', document.cookie ? 'Cookies available' : 'No cookies');
+      
+      // Debug info for checking URL construction
+      const constructedUrl = new URL(redirectUrl, window.location.origin);
+      console.log('Constructed URL object:', constructedUrl.toString());
+      console.log('URL pathname:', constructedUrl.pathname);
+      console.log('URL search params:', constructedUrl.search);
+        return { 
         success: true, 
         message: 'Verified',
-        redirectUrl: `/verify?employee_id=${secretCode}`
+        redirectUrl: isDev ? redirectUrl : `${domain}${redirectUrl}`
       };
     } else {
-      console.log('Employee verification failed');
+      console.log('Employee verification failed - Invalid code provided');
       return { 
         success: false, 
         message: 'Not Verified',
