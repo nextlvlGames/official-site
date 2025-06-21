@@ -1,51 +1,47 @@
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, getDoc } from 'firebase/firestore/lite';
+
+// Firebase configuration from environment variables
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 /**
  * Verify employee by secret code
  * @param {string} secretCode - The secret code to verify
  * @returns {object} - Result of verification { success: boolean, message: string }
  */
-export const verifyEmployeeByCode = (secretCode) => {
+export const verifyEmployeeByCode = async (secretCode) => {
   console.log('Verifying employee with code:', secretCode);
-  console.log('Current environment:', process.env.NODE_ENV || 'development');
-  console.log('Browser location:', window.location);
-  console.log('Document URL:', document.URL);
-  console.log('Pathname:', window.location.pathname);
   
   try {
-    // For now, we're hard-coding the verification for the specific ID
-    if (secretCode === 'l29sm5nv7ubr') {
+    // We should check against a list of valid employee codes stored in Firestore
+    // rather than hardcoding them
+    const employeeRef = doc(db, 'employee_codes', secretCode);
+    const employeeSnapshot = await getDoc(employeeRef);
+    
+    if (employeeSnapshot.exists()) {
       // Use environment variables to determine if we're in production
       const isProduction = import.meta.env.VITE_IS_PRODUCTION === 'true';
       const domain = isProduction ? 'https://nextlvlgames.site' : window.location.origin;
       const redirectUrl = `/verify?employee_id=${secretCode}`;
       
-      // Add diagnostic for client-side routing issues
-      console.log('Current path:', window.location.pathname);
-      console.log('Navigation will redirect to:', redirectUrl);
+      // Get the associated employee ID from the code document
+      const associatedEmployeeId = employeeSnapshot.data().employeeId || secretCode;
       
-      console.log('Environment:', isProduction ? 'Production' : 'Development');
-      console.log('Using domain:', domain);
-      console.log('Employee verified successfully');
-      console.log('Generated redirect URL:', redirectUrl);
-      console.log('Full URL would be:', `${domain}${redirectUrl}`);
-      console.log('Base URL:', window.location.origin);
-      console.log('Protocol:', window.location.protocol);
-      console.log('Host:', window.location.host);
-      console.log('Hostname:', window.location.hostname);
-      console.log('Available routes check - current URL structure:');
-      console.log('Request headers:', document.cookie ? 'Cookies available' : 'No cookies');
+      console.log('Employee verification code found');
       
-      // Debug info for checking URL construction
-      try {
-        const constructedUrl = new URL(redirectUrl, window.location.origin);
-        console.log('Constructed URL object:', constructedUrl.toString());
-        console.log('URL pathname:', constructedUrl.pathname);
-        console.log('URL search params:', constructedUrl.search);
-        console.log('Checking if route handler exists for:', constructedUrl.pathname);
-      } catch (urlError) {
-        console.error('Error constructing URL:', urlError);
-      }
-      
-      // Return enhanced response with more redirection options
+      // Return enhanced response with redirection options
       return { 
         success: true, 
         message: 'Verified',
@@ -53,8 +49,8 @@ export const verifyEmployeeByCode = (secretCode) => {
         redirectUrl: redirectUrl,
         // The full URL with domain for direct browser navigation
         fullUrl: `${domain}${redirectUrl}`,
-        // Just the raw employee ID
-        employeeId: secretCode,
+        // The employee ID associated with this code
+        employeeId: associatedEmployeeId,
         // State flag that can be used by the component
         verified: true
       };
@@ -79,6 +75,38 @@ export const verifyEmployeeByCode = (secretCode) => {
 };
 
 /**
- * In the future, this could be expanded to include Firebase verification
- * by importing the necessary Firebase client libraries
+ * Verify employee using Firebase
+ * @param {string} employeeId - The employee ID to look up in Firestore
+ * @returns {Promise<object>} - Employee data or null if not found
  */
+export const verifyEmployeeWithFirebase = async (employeeId) => {
+  try {
+    const employeeRef = doc(db, 'employees', employeeId);
+    const employeeSnapshot = await getDoc(employeeRef);
+    
+    if (employeeSnapshot.exists()) {
+      return {
+        success: true,
+        message: 'Verified via Firebase',
+        data: employeeSnapshot.data(),
+        employeeId: employeeId,
+        verified: true
+      };
+    } else {
+      return {
+        success: false,
+        message: 'Employee not found in database',
+        data: null,
+        verified: false
+      };
+    }
+  } catch (error) {
+    console.error('Firebase verification error:', error);
+    return {
+      success: false,
+      message: 'Error verifying with database',
+      error: error.message,
+      verified: false
+    };
+  }
+};

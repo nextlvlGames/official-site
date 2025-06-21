@@ -1,26 +1,9 @@
 import { useState, useEffect } from 'react';
-// Fix Firebase imports to be more explicit
-import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc } from 'firebase/firestore/lite'; // Use lite version
-import { getAnalytics } from 'firebase/analytics';
+// Import the utility functions for employee verification
+import { verifyEmployeeByCode, verifyEmployeeWithFirebase } from '../utils/employeeVerification';
 import { Link } from 'react-router-dom';
 
-// Firebase configuration with real credentials for testing
-// NOTE: These should be moved to environment variables before production
-const firebaseConfig = {
-  apiKey: "AIzaSyCePHhW9WS7nMaPCjAVByxPy2EDZdya9-U",
-  authDomain: "nextlevel-api.firebaseapp.com",
-  projectId: "nextlevel-api",
-  storageBucket: "nextlevel-api.firebasestorage.app",
-  messagingSenderId: "527068888043",
-  appId: "1:527068888043:web:8220f1a65b3f25034837ae",
-  measurementId: "G-GVL46CJVML"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const analytics = getAnalytics(app);
+// Firebase is initialized in the employeeVerification.js utility file
 
 function EmployeeVerification() {
   const [employeeData, setEmployeeData] = useState(null);
@@ -41,30 +24,26 @@ function EmployeeVerification() {
           setLoading(false);
           return;
         }
+          // Try Firebase verification first
+        const firebaseResult = await verifyEmployeeWithFirebase(employeeId);
         
-        // For testing purposes, we can hardcode the verification for the specific ID
-        if (employeeId === 'l29sm5nv7ubr') {
-          // This is the known valid employee ID
-          setEmployeeData({
-            name: "Kotla Lokeshwari",
-            role: "React Developer & API integration intern",
-            joinDate: { seconds: new Date('May 7, 2025 00:00:00 UTC+5:30').getTime() / 1000 },
-            endDate: { seconds: new Date('June 7, 2025 00:00:00 UTC+5:30').getTime() / 1000 },
-            mentor: "Surya Prakash Das",
-            mentorPosition: "Software Development Head",
-            salary: "Performance Based",
-            testimonial: "Kotla's strength is her domain knowledge and patience in resolving a problem. During her tenure she shows great punctuality and communication skills which truly made an effect on our product."
-          });
+        if (firebaseResult.success) {
+          // Use the employee data from Firebase
+          setEmployeeData(firebaseResult.data);
           setLoading(false);
           return;
-        }
-        
-        // Query Firestore for the employee
-        const employeeRef = doc(db, 'employees', employeeId);
-        const employeeSnapshot = await getDoc(employeeRef);
-        
-        if (employeeSnapshot.exists()) {
-          setEmployeeData(employeeSnapshot.data());
+        }        // If Firebase verification failed, try verification by code as fallback
+        const verificationResult = await verifyEmployeeByCode(employeeId);
+        if (verificationResult.success) {
+          // Use the employee ID from the code verification to get employee data
+          const employeeData = await verifyEmployeeWithFirebase(verificationResult.employeeId);
+          if (employeeData.success) {
+            setEmployeeData(employeeData.data);
+            setLoading(false);
+            return;
+          } else {
+            setError('Employee data not found. Please contact support.');
+          }
         } else {
           setError('Employee not found');
         }
@@ -175,4 +154,3 @@ function EmployeeVerification() {
 }
 
 export default EmployeeVerification;
-         
