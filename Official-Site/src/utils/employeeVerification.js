@@ -9,16 +9,15 @@ export const verifyEmployeeByCode = (secretCode) => {
   console.log('Browser location:', window.location);
   console.log('Document URL:', document.URL);
   console.log('Pathname:', window.location.pathname);
-  
-  try {
+    try {
     // For now, we're hard-coding the verification for the specific ID
     if (secretCode === 'l29sm5nv7ubr') {
-      // Use domain-specific redirect URL construction
-      const isDev = process.env.NODE_ENV !== 'production';
-      const domain = isDev ? window.location.origin : 'https://nextlvlgames.site';
+      // Use environment variables to determine if we're in production
+      const isProduction = import.meta.env.VITE_IS_PRODUCTION === 'true';
+      const domain = isProduction ? 'https://nextlvlgames.site' : window.location.origin;
       const redirectUrl = `/verify?employee_id=${secretCode}`;
       
-      console.log('Environment:', isDev ? 'Development' : 'Production');
+      console.log('Environment:', isProduction ? 'Production' : 'Development');
       console.log('Using domain:', domain);
       console.log('Employee verified successfully');
       console.log('Generated redirect URL:', redirectUrl);
@@ -34,11 +33,10 @@ export const verifyEmployeeByCode = (secretCode) => {
       const constructedUrl = new URL(redirectUrl, window.location.origin);
       console.log('Constructed URL object:', constructedUrl.toString());
       console.log('URL pathname:', constructedUrl.pathname);
-      console.log('URL search params:', constructedUrl.search);
-        return { 
+      console.log('URL search params:', constructedUrl.search);        return { 
         success: true, 
         message: 'Verified',
-        redirectUrl: isDev ? redirectUrl : `${domain}${redirectUrl}`
+        redirectUrl: isProduction ? `${domain}${redirectUrl}` : redirectUrl
       };
     } else {
       console.log('Employee verification failed - Invalid code provided');
