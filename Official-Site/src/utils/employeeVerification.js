@@ -11,11 +11,14 @@ export const verifyEmployeeByCode = (secretCode) => {
   console.log('Pathname:', window.location.pathname);
     try {
     // For now, we're hard-coding the verification for the specific ID
-    if (secretCode === 'l29sm5nv7ubr') {
-      // Use environment variables to determine if we're in production
+    if (secretCode === 'l29sm5nv7ubr') {      // Use environment variables to determine if we're in production
       const isProduction = import.meta.env.VITE_IS_PRODUCTION === 'true';
       const domain = isProduction ? 'https://nextlvlgames.site' : window.location.origin;
       const redirectUrl = `/verify?employee_id=${secretCode}`;
+      
+      // Add diagnostic for client-side routing issues
+      console.log('Current path:', window.location.pathname);
+      console.log('Navigation will redirect to:', redirectUrl);
       
       console.log('Environment:', isProduction ? 'Production' : 'Development');
       console.log('Using domain:', domain);
@@ -28,15 +31,24 @@ export const verifyEmployeeByCode = (secretCode) => {
       console.log('Hostname:', window.location.hostname);
       console.log('Available routes check - current URL structure:');
       console.log('Request headers:', document.cookie ? 'Cookies available' : 'No cookies');
-      
-      // Debug info for checking URL construction
-      const constructedUrl = new URL(redirectUrl, window.location.origin);
-      console.log('Constructed URL object:', constructedUrl.toString());
-      console.log('URL pathname:', constructedUrl.pathname);
-      console.log('URL search params:', constructedUrl.search);        return { 
+        // Debug info for checking URL construction
+      try {
+        const constructedUrl = new URL(redirectUrl, window.location.origin);
+        console.log('Constructed URL object:', constructedUrl.toString());
+        console.log('URL pathname:', constructedUrl.pathname);
+        console.log('URL search params:', constructedUrl.search);
+        
+        // Check if the route exists in the application
+        console.log('Checking if route handler exists for:', constructedUrl.pathname);
+      } catch (urlError) {
+        console.error('Error constructing URL:', urlError);
+      }// Build both relative and absolute URLs to give the calling code more options
+      return { 
         success: true, 
         message: 'Verified',
-        redirectUrl: isProduction ? `${domain}${redirectUrl}` : redirectUrl
+        redirectUrl: redirectUrl,
+        absoluteUrl: `${domain}${redirectUrl}`,
+        code: secretCode
       };
     } else {
       console.log('Employee verification failed - Invalid code provided');
